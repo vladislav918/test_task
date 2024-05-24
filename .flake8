@@ -1,3 +1,3 @@
 [flake8]
 max-line-length = 120
-exclude = ./venv/,project/settings/, *.pyc, *.pyo, *.pyd, __init__.py, tests/*.py, migrations/*.py
+exclude = ./venv/,project/settings/, *.pyc, *.pyo, *.pyd, __init__.py, tests/*.py, */migrations/*.py,
