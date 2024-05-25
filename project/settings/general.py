@@ -95,5 +95,6 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 LOGIN_REDIRECT_URL = '/memory_list/'
+LOGIN_URL = 'home'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap5'

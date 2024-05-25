@@ -2,6 +2,7 @@ from django.views.generic import ListView, UpdateView, FormView, DetailView
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout as auth_logout
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .forms import MemoryForm
 from .models import Coordinates, Memory
@@ -11,7 +12,7 @@ def index(request):
     return render(request, 'places_remember/index.html')
 
 
-class MemoryList(ListView):
+class MemoryListView(LoginRequiredMixin, ListView):
     model = Memory
     template_name = 'places_remember/memory_list.html'
 
@@ -20,7 +21,7 @@ class MemoryList(ListView):
         return memory
 
 
-class MemoryAddView(FormView):
+class MemoryAddView(LoginRequiredMixin, FormView):
     template_name = 'places_remember/map.html'
     form_class = MemoryForm
     success_url = reverse_lazy('memory_list')
@@ -40,18 +41,32 @@ class MemoryAddView(FormView):
         memory.save()
         return super().form_valid(form)
 
-    def form_invalid(self, form):
-        return super().form_invalid(form)
 
-
-class UpdateMemory(UpdateView):
+class MemoryUpdateView(LoginRequiredMixin, UpdateView):
     model = Memory
-    fields = ['title', 'comment']
+    form_class = MemoryForm
     template_name_suffix = '_update_form'
     success_url = reverse_lazy('memory_list')
 
+    def form_valid(self, form):
+        memory = self.get_object()
 
-class MemoryDetailView(DetailView):
+        memory.title = form.cleaned_data['title']
+        memory.comment = form.cleaned_data['comment']
+
+        if form.cleaned_data['latitude'] and form.cleaned_data['longitude']:
+            coord = Coordinates.objects.create(
+                lat=form.cleaned_data['latitude'],
+                lng=form.cleaned_data['longitude']
+            )
+            memory.coordinates = coord
+
+        memory.save()
+
+        return redirect(self.success_url)
+
+
+class MemoryDetailView(LoginRequiredMixin, DetailView):
     model = Memory
 
 

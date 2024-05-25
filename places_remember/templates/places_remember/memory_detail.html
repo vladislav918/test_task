@@ -1,6 +1,7 @@
 {% extends 'places_remember/base.html' %}
 
-{% block content %} 
+{% block content %}
+
 {% include 'places_remember/nav.html' %}
 
 <div class="card">
@@ -23,4 +24,5 @@
 
     var marker = L.marker([{{ memory.coordinates.lat|stringformat:"g" }}, {{ memory.coordinates.lng|stringformat:"g" }}]).addTo(map);
 </script> 
+
 {% endblock%}

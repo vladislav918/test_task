@@ -1,5 +1,4 @@
 from django.contrib.auth.models import AbstractUser
-from django.contrib.auth import get_user_model
 from django.db import models
 
 
@@ -15,12 +14,9 @@ class Coordinates(models.Model):
         return f'{self.lat} - {self.lng}'
 
 
-User = get_user_model()
-
-
 class Memory(models.Model):
     author = models.ForeignKey(
-        User,
+        CustomUser,
         null=True,
         related_name='memories',
         on_delete=models.CASCADE,

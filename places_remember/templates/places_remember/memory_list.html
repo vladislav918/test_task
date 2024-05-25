@@ -1,7 +1,10 @@
 {% extends 'places_remember/base.html' %}
 
 {% block content %}
+
 {% include 'places_remember/nav.html' %}
+
+<a href="{% url 'logout' %}" class="btn btn-danger btn-lg btn-block" role="button" aria-pressed="true">Logout</a>
 
 <div class="container d-flex flex-column align-items-center">
   <div class="row">
@@ -14,9 +17,12 @@
         </div>
       </div>
       <hr>  
+    {% empty %}
+      <h5 class="card-header">У вас нет ни одного воспоминания</h5>
     {% endfor %}
   </div>
 </div>
     
 <a href="{% url 'add_memory' %}" class="btn btn-success btn-lg btn-block" role="button" aria-pressed="true">Добавить воспоминание</a>
+
 {% endblock %}
