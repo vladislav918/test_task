@@ -1,0 +1,22 @@
+{% extends 'places_remember/base.html' %}
+
+{% block content %}
+{% include 'places_remember/nav.html' %}
+
+<div class="container d-flex flex-column align-items-center">
+  <div class="row">
+    {% for memory in object_list %}
+      <div class="card">
+        <h5 class="card-header">{{ memory.title }}</h5>
+        <div class="card-body">
+          <h5 class="card-title">{{ memory.comment }}</h5>
+          <a href="{% url 'memory-detail' pk=memory.id %}" class="btn btn-primary">Детально </a>
+        </div>
+      </div>
+      <hr>  
+    {% endfor %}
+  </div>
+</div>
+    
+<a href="{% url 'add_memory' %}" class="btn btn-success btn-lg btn-block" role="button" aria-pressed="true">Добавить воспоминание</a>
+{% endblock %}

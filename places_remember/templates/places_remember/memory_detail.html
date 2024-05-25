@@ -1,0 +1,26 @@
+{% extends 'places_remember/base.html' %}
+
+{% block content %} 
+{% include 'places_remember/nav.html' %}
+
+<div class="card">
+    <h5 class="card-header">{{ memory.title }}</h5>
+    <div class="card-body">
+      <h5 class="card-title">{{ memory.comment }}</h5>
+      <a href="{% url 'update_page' pk=memory.id %}" class="btn btn-primary">Обновить</a>
+    </div>
+</div>
+
+<div id="map" style="height: 310px; width: 100%"></div>
+
+<script>
+    var map = L.map('map').setView([{{ memory.coordinates.lat|stringformat:"g" }}, {{ memory.coordinates.lng|stringformat:"g" }}], 13);
+
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
+    var marker = L.marker([{{ memory.coordinates.lat|stringformat:"g" }}, {{ memory.coordinates.lng|stringformat:"g" }}]).addTo(map);
+</script> 
+{% endblock%}

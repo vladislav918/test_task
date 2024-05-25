@@ -94,4 +94,6 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/memory_list/'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap5'

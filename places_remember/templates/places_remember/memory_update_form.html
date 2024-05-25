@@ -1,0 +1,12 @@
+{% extends "places_remember/base.html" %}
+{% load crispy_forms_tags %}
+
+
+{% block content%}
+{% include 'places_remember/nav.html' %}
+
+<form method="post">{% csrf_token %}
+    {{ form|crispy}}
+    <input type="submit" value="Update">
+</form>
+{% endblock%}

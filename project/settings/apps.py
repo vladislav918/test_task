@@ -11,6 +11,8 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.vk',
+    'crispy_forms',
+    'crispy_bootstrap5', 
 
     'places_remember',
 ]

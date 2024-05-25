@@ -1,0 +1,40 @@
+{% extends 'places_remember/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+{% include 'places_remember/nav.html' %}
+
+<div id="map" style="height: 310px; width: 100%"></div>
+
+<script>
+    var map = L.map('map').setView([56.016961, 92.854336], 13);
+
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
+    function onMapClick(event) {
+        document.getElementById('latitude').value = event.latlng.lat;
+        document.getElementById('longitude').value = event.latlng.lng;
+
+        L.marker([event.latlng.lat, event.latlng.lng]).addTo(map);
+    }
+
+    map.on('click', onMapClick);
+
+    document.querySelector('.btn.btn-success.btn-lg.btn-block').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelector('form').submit();
+    });
+</script>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form|crispy}}
+    <input type="hidden" name="latitude" id="latitude">
+    <input type="hidden" name="longitude" id="longitude">
+    <input class="btn btn-success btn-lg btn-block" role="button" type="submit" value="Сохранить">
+</form> 
+
+{% endblock %}
