@@ -26,4 +26,4 @@ jobs:
 
     - name: Run tests
       run: |
-        docker-compose exec web python manage.py test
+        docker-compose exec -T web sh -c python manage.py test
