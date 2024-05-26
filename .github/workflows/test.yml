@@ -1,0 +1,29 @@
+name: Run Tests
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Build and run containers
+      run: |
+        docker-compose build
+        docker-compose up -d
+      env:
+        POSTGRES_HOST: db
+        network: mynetwork
+
+    - name: Run tests
+      run: |
+        docker-compose exec -T web sh -c 'python manage.py test'
+      env:
+        POSTGRES_HOST: db
+        network: mynetwork
