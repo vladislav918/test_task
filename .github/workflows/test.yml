@@ -22,12 +22,8 @@ jobs:
         echo "DB_PORT=${{ secrets.DB_PORT }}" >> .env
         
         docker-compose build
-        docker-compose up -d
-
-    - name: Wait for web service to start
-      run: |
-        until curl --fail http://localhost:8000; do sleep 1; done;
-        echo "Web service is up."
+        docker-compose up -d > docker-compose-output.log 2>&1
+        docker inspect --format='{{json.State.Status}}' <container_name_or_id>
 
     - name: Run tests
       run: |
