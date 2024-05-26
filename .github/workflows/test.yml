@@ -24,6 +24,11 @@ jobs:
         docker-compose build
         docker-compose up -d
 
+    - name: Wait for web service to start
+      run: |
+        until curl --fail http://localhost:8000; do sleep 1; done;
+        echo "Web service is up."
+
     - name: Run tests
       run: |
         docker-compose exec -T web sh -c python manage.py test
