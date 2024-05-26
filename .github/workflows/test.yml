@@ -8,21 +8,23 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
 
     - name: Build and run containers
       run: |
-        docker-compose build
-        docker-compose up -d
-      env:
-        DB_HOST: db
-        DB_NAME: ${{ secrets.DB_NAME }}
-        DB_USER: ${{ secrets.DB_USER }}
-        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-        DB_PORT: ${{ secrets.DB_PORT }}
+        docker-compose --env-file <(echo "DB_HOST=db" \
+                                      "DB_NAME=${{ secrets.DB_NAME }}" \
+                                      "DB_USER=${{ secrets.DB_USER }}" \
+                                      "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" \
+                                      "DB_PORT=${{ secrets.DB_PORT }}") build
+        docker-compose --env-file <(echo "DB_HOST=db" \
+                                      "DB_NAME=${{ secrets.DB_NAME }}" \
+                                      "DB_USER=${{ secrets.DB_USER }}" \
+                                      "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" \
+                                      "DB_PORT=${{ secrets.DB_PORT }}") up -d
 
     - name: Run tests
       run: |
