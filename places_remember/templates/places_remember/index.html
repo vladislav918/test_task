@@ -10,7 +10,6 @@
         <p>Этот веб-сайт предназначен для хранения ваших воспоминаний о местах, где вы побывали. Сохраняйте ваши любимые места по всему миру!</p>
     </div>
     <div class="mt-5">
-        
         <form action="{% provider_login_url 'vk' %}" method="post">
             {% csrf_token %}
             <button type="submit" class="btn btn-primary">Войти с помощью VK</button>

@@ -45,7 +45,7 @@ class MemoryAddView(LoginRequiredMixin, FormView):
 class MemoryUpdateView(LoginRequiredMixin, UpdateView):
     model = Memory
     form_class = MemoryForm
-    template_name_suffix = '_update_form'
+    template_name = 'places_remember/memory_update_form.html'
     success_url = reverse_lazy('memory_list')
 
     def form_valid(self, form):
@@ -55,11 +55,11 @@ class MemoryUpdateView(LoginRequiredMixin, UpdateView):
         memory.comment = form.cleaned_data['comment']
 
         if form.cleaned_data['latitude'] and form.cleaned_data['longitude']:
-            coord = Coordinates.objects.create(
-                lat=form.cleaned_data['latitude'],
-                lng=form.cleaned_data['longitude']
-            )
-            memory.coordinates = coord
+            coord = memory.coordinates
+
+            coord.lat = form.cleaned_data['latitude']
+            coord.lng = form.cleaned_data['longitude']
+            coord.save()
 
         memory.save()
 
