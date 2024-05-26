@@ -23,7 +23,6 @@ jobs:
         
         docker-compose build
         docker-compose up -d > docker-compose-output.log 2>&1
-        docker inspect --format='{{json.State.Status}}' <container_name_or_id>
 
     - name: Run tests
       run: |
