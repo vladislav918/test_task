@@ -31,8 +31,4 @@ jobs:
     steps:
     - name: Run tests
       run: |
-<<<<<<< HEAD
-        docker-compose exec -T web sh -c python manage.py test
-=======
-        docker-compose exec -T web sh -c python manage.py test
->>>>>>> 5a07052 (Update test)
+        docker-compose exec -T web sh -c 'python manage.py test'
