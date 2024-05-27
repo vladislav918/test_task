@@ -28,6 +28,7 @@ jobs:
 
       - name: Run tests
         run: |
+          sleep 10
           docker-compose exec -T web sh -c "python manage.py test"
 
       - name: Stop and remove containers
