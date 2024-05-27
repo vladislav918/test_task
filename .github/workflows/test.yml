@@ -19,7 +19,6 @@ jobs:
           docker-compose build
           docker-compose up -d
         env:
-          network: mynetwork
           DB_HOST: ${{ secrets.DB_HOST }}
           DB_NAME: ${{ secrets.DB_NAME }}
           DB_USER: ${{ secrets.DB_USER }}
@@ -30,9 +29,6 @@ jobs:
       - name: Run tests
         run: |
           docker-compose exec -T web sh -c "python manage.py test"
-        env:
-          POSTGRES_HOST: db
-          network: mynetwork
 
       - name: Stop and remove containers
         run: docker-compose down
