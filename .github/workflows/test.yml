@@ -20,6 +20,7 @@ jobs:
         echo "DB_USER=${{ secrets.DB_USER }}" >> .env
         echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
         echo "DB_PORT=${{ secrets.DB_PORT }}" >> .env
+        echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> .env
         
         docker-compose build
         docker-compose up -d > docker-compose-output.log 2>&1
@@ -31,4 +32,5 @@ jobs:
     steps:
     - name: Run tests
       run: |
-        docker-compose exec -T web sh -c 'python manage.py test'
+        docker-compose exec -T web sh -c 'python manage.py test' -v
+
